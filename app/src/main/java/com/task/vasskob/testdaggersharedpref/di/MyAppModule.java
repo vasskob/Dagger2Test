@@ -26,7 +26,7 @@ public class MyAppModule {
 
     @Provides
     @Singleton
-    PrefsRepository providePrefsRepository() {
-        return new PrefsRepository(application);
+    PrefsRepository providePrefsRepository(Context context) {
+        return new PrefsRepository(context);
     }
 }

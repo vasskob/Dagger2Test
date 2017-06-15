@@ -2,14 +2,17 @@ package com.task.vasskob.testdaggersharedpref.presenter;
 
 import com.task.vasskob.testdaggersharedpref.MyApplication;
 import com.task.vasskob.testdaggersharedpref.model.repository.PrefsRepository;
+import com.task.vasskob.testdaggersharedpref.model.repository.Repository;
 import com.task.vasskob.testdaggersharedpref.view.MyView;
 
 import javax.inject.Inject;
 
+import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_ERROR;
+import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_SUCCESS;
 import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_ERROR;
 import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_SUCCESS;
 
-public class PresenterImpl implements Presenter, PrefsRepository.MyListener {
+public class PresenterImpl implements Presenter {
 
     @Inject
     public PrefsRepository repository;
@@ -17,23 +20,42 @@ public class PresenterImpl implements Presenter, PrefsRepository.MyListener {
 
     public PresenterImpl() {
         MyApplication.getInstance().getMyAppComponent().inject(this);
-        repository.setListener(this);
     }
+
+    private Repository.OnLoadListener<String> loadListener = new PrefsRepository.OnLoadListener<String>() {
+        @Override
+        public void onLoaded(String data) {
+            myView.showSavedText(data);
+            myView.showToast(LOAD_SUCCESS);
+        }
+
+        @Override
+        public void onError(String error) {
+            myView.showToast(LOAD_ERROR);
+        }
+    };
+
+    private Repository.OnSavedListener saveListener = new PrefsRepository.OnSavedListener() {
+        @Override
+        public void onSaved() {
+            myView.showToast(SAVE_SUCCESS);
+        }
+
+        @Override
+        public void onError(String message) {
+            myView.showToast(SAVE_ERROR);
+        }
+    };
+
 
     @Override
     public void saveText(String text) {
-//        repository.add(text);
+        repository.add(text, saveListener);
     }
 
     @Override
     public void loadText() {
-        repository.get(null);
-//        if (text.equals(DEFAULT_SAVED_TEXT)) {
-//            myView.showToast(LOAD_ERROR);
-//        } else {
-//            myView.showSavedText(text);
-//            myView.showToast(LOAD_SUCCESS);
-//        }
+        repository.get(loadListener);
     }
 
     @Override
@@ -44,15 +66,5 @@ public class PresenterImpl implements Presenter, PrefsRepository.MyListener {
     @Override
     public void detachView() {
         myView = null;
-    }
-
-    @Override
-    public void onSuccess() {
-        myView.showToast(SAVE_SUCCESS);
-    }
-
-    @Override
-    public void onError() {
-        myView.showToast(SAVE_ERROR);
     }
 }
