@@ -1,7 +1,5 @@
 package com.task.vasskob.testdaggersharedpref.view;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
@@ -17,19 +15,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements MyView {
 
-    @SuppressWarnings("unused")
-    @OnClick(R.id.btn_save)
-    void onSaveClick() {
-        String text = etTextToSave.getText().toString();
-        presenter.saveText(text);
-    }
-
-    @SuppressWarnings("unused")
-    @OnClick(R.id.btn_load)
-    void onLoadClick() {
-        presenter.loadText();
-    }
-
     @Bind(R.id.tv_title)
     TextView tvTitle;
 
@@ -44,12 +29,24 @@ public class MainActivity extends AppCompatActivity implements MyView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        String PREFS_NAME = "prefs";
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
-        presenter = new PresenterImpl(prefs);
+        presenter = new PresenterImpl(MainActivity.this);
         presenter.attachView(this);
     }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.btn_save)
+    void onSaveClick() {
+        String text = etTextToSave.getText().toString();
+        presenter.saveText(text);
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.btn_load)
+    void onLoadClick() {
+        presenter.loadText();
+    }
+
 
     @Override
     public void showLoadSuccessToast() {
