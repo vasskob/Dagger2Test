@@ -65,6 +65,6 @@ public class PresenterImpl implements Presenter {
     @Override
     public void detachView() {
         myView = null;
-        MyApplication.getInstance().getPresenterComponent().inject(this);
+        MyApplication.getInstance().clearPresenterComponent();
     }
 }
