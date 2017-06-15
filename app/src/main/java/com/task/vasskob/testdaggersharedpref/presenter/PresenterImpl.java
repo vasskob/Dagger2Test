@@ -1,32 +1,42 @@
 package com.task.vasskob.testdaggersharedpref.presenter;
 
-import android.content.Context;
-
+import com.task.vasskob.testdaggersharedpref.MyApplication;
 import com.task.vasskob.testdaggersharedpref.model.repository.PrefsRepository;
 import com.task.vasskob.testdaggersharedpref.view.MyView;
 
-public class PresenterImpl implements Presenter {
+import javax.inject.Inject;
 
-    private final PrefsRepository repository;
+import static com.task.vasskob.testdaggersharedpref.Constants.DEFAULT_SAVED_TEXT;
+import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_ERROR;
+import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_SUCCESS;
+import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_ERROR;
+import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_SUCCESS;
+
+public class PresenterImpl implements Presenter, PrefsRepository.MyListener {
+
+    @Inject
+    public PrefsRepository repository;
     private MyView myView;
 
-    public PresenterImpl(Context context) {
-        repository = new PrefsRepository(context);
+    public PresenterImpl() {
+        MyApplication.getInstance().getMyAppComponent().inject(this);
+        repository.setListener(this);
     }
 
     @Override
     public void saveText(String text) {
-        // TODO: 15/06/17 implement fake async loading with loader
         repository.add(text);
-        myView.showSaveSuccessToast();
     }
 
     @Override
     public void loadText() {
-        // TODO: 15/06/17 implement fake async loading with loader
         String text = repository.get();
-        myView.showSavedText(text);
-        myView.showLoadSuccessToast();
+        if (text.equals(DEFAULT_SAVED_TEXT)) {
+            myView.showToast(LOAD_ERROR);
+        } else {
+            myView.showSavedText(text);
+            myView.showToast(LOAD_SUCCESS);
+        }
     }
 
     @Override
@@ -39,4 +49,13 @@ public class PresenterImpl implements Presenter {
         myView = null;
     }
 
+    @Override
+    public void onSuccess() {
+        myView.showToast(SAVE_SUCCESS);
+    }
+
+    @Override
+    public void onError() {
+        myView.showToast(SAVE_ERROR);
+    }
 }

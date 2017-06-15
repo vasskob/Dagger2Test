@@ -1,7 +1,6 @@
 package com.task.vasskob.testdaggersharedpref.view;
 
 public interface MyView {
-    void showLoadSuccessToast();
-    void showSaveSuccessToast();
+    void showToast(int key);
     void showSavedText(String text);
 }

@@ -13,6 +13,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.task.vasskob.testdaggersharedpref.Constants.DEFAULT_SAVED_TEXT;
+
 public class MainActivity extends AppCompatActivity implements MyView {
 
     @Bind(R.id.tv_title)
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MyView {
         ButterKnife.bind(this);
 
 
-        presenter = new PresenterImpl(MainActivity.this);
+        presenter = new PresenterImpl();
         presenter.attachView(this);
     }
 
@@ -47,19 +49,24 @@ public class MainActivity extends AppCompatActivity implements MyView {
         presenter.loadText();
     }
 
-
-    @Override
-    public void showLoadSuccessToast() {
-        showToast(getString(R.string.load_success));
-    }
-
-    @Override
-    public void showSaveSuccessToast() {
-        showToast(getString(R.string.save_success));
-
-    }
-
-    public void showToast(String msg) {
+    public void showToast(int key) {
+        String msg;
+        switch (key) {
+            case 0:
+                msg = getString(R.string.load_error);
+                break;
+            case 1:
+                msg = getString(R.string.load_success);
+                break;
+            case 2:
+                msg = getString(R.string.save_error);
+                break;
+            case 3:
+                msg = getString(R.string.save_success);
+                break;
+            default:
+                msg = DEFAULT_SAVED_TEXT;
+        }
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -67,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements MyView {
     @Override
     public void showSavedText(String title) {
         tvTitle.setText(title);
-        showToast(getString(R.string.load_success));
     }
 
     @Override
