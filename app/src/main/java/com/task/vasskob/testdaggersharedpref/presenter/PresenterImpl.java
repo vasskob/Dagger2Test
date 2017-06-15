@@ -19,7 +19,7 @@ public class PresenterImpl implements Presenter {
     private MyView myView;
 
     public PresenterImpl() {
-        MyApplication.getInstance().getMyAppComponent().inject(this);
+        MyApplication.getInstance().getPresenterComponent().inject(this);
     }
 
     private final Repository.OnLoadListener<String> loadListener = new PrefsRepository.OnLoadListener<String>() {

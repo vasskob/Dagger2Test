@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MyView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        MyApplication.getInstance().getMyAppComponent().inject(this);
+        MyApplication.getInstance().getActivityComponent().inject(this);
         presenter.attachView(this);
     }
 

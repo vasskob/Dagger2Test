@@ -3,9 +3,6 @@ package com.task.vasskob.testdaggersharedpref.di;
 import android.app.Application;
 import android.content.Context;
 
-import com.task.vasskob.testdaggersharedpref.model.repository.PrefsRepository;
-import com.task.vasskob.testdaggersharedpref.presenter.PresenterImpl;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -25,15 +22,4 @@ public class MyAppModule {
         return application;
     }
 
-    @Provides
-    @Singleton
-    PrefsRepository providePrefsRepository(Context context) {
-        return new PrefsRepository(context);
-    }
-
-    @Provides
-    @Singleton
-    PresenterImpl providePresenter() {
-        return new PresenterImpl();
-    }
 }
