@@ -1,7 +1,8 @@
 package com.task.vasskob.testdaggersharedpref.presenter;
 
+import android.content.SharedPreferences;
+
 import com.task.vasskob.testdaggersharedpref.model.repository.PrefsRepository;
-import com.task.vasskob.testdaggersharedpref.utils.Prefs;
 import com.task.vasskob.testdaggersharedpref.view.MyView;
 
 public class PresenterImpl implements Presenter {
@@ -9,7 +10,7 @@ public class PresenterImpl implements Presenter {
     private final PrefsRepository repository;
     private MyView myView;
 
-    public PresenterImpl(Prefs prefs) {
+    public PresenterImpl(SharedPreferences prefs) {
         repository = new PrefsRepository(prefs);
     }
 

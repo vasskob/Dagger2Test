@@ -1,5 +1,7 @@
 package com.task.vasskob.testdaggersharedpref.view;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
@@ -8,7 +10,6 @@ import android.widget.Toast;
 
 import com.task.vasskob.testdaggersharedpref.R;
 import com.task.vasskob.testdaggersharedpref.presenter.PresenterImpl;
-import com.task.vasskob.testdaggersharedpref.utils.Prefs;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,7 +44,10 @@ public class MainActivity extends AppCompatActivity implements MyView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        presenter = new PresenterImpl(Prefs.with(this));
+        String PREFS_NAME = "prefs";
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        presenter = new PresenterImpl(prefs);
         presenter.attachView(this);
     }
 

@@ -1,23 +1,27 @@
 package com.task.vasskob.testdaggersharedpref.model.repository;
 
-import com.task.vasskob.testdaggersharedpref.utils.Prefs;
+import android.content.SharedPreferences;
 
 public class PrefsRepository implements Repository<String> {
 
-    private final Prefs prefs;
+    private static final String KEY = "savedText";
+    private final SharedPreferences prefs;
 
-    public PrefsRepository(Prefs prefs) {
+    public PrefsRepository(SharedPreferences prefs) {
         this.prefs = prefs;
     }
 
     @Override
     public void add(String text) {
-        prefs.setSavedText(text);
+        prefs
+                .edit()
+                .putString(KEY, text)
+                .apply();
     }
 
     @Override
     public String get() {
-        return prefs.getSavedText();
+        return prefs.getString(KEY, "error");
     }
 
 //    @Override
