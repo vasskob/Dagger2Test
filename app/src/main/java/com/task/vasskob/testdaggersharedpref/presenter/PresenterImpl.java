@@ -6,9 +6,6 @@ import com.task.vasskob.testdaggersharedpref.view.MyView;
 
 import javax.inject.Inject;
 
-import static com.task.vasskob.testdaggersharedpref.Constants.DEFAULT_SAVED_TEXT;
-import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_ERROR;
-import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_SUCCESS;
 import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_ERROR;
 import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_SUCCESS;
 
@@ -25,18 +22,18 @@ public class PresenterImpl implements Presenter, PrefsRepository.MyListener {
 
     @Override
     public void saveText(String text) {
-        repository.add(text);
+//        repository.add(text);
     }
 
     @Override
     public void loadText() {
-        String text = repository.get();
-        if (text.equals(DEFAULT_SAVED_TEXT)) {
-            myView.showToast(LOAD_ERROR);
-        } else {
-            myView.showSavedText(text);
-            myView.showToast(LOAD_SUCCESS);
-        }
+        repository.get(null);
+//        if (text.equals(DEFAULT_SAVED_TEXT)) {
+//            myView.showToast(LOAD_ERROR);
+//        } else {
+//            myView.showSavedText(text);
+//            myView.showToast(LOAD_SUCCESS);
+//        }
     }
 
     @Override
