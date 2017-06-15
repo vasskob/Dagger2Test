@@ -15,7 +15,7 @@ public class PrefsRepository implements Repository<String> {
 
     private final SharedPreferences prefs;
 
-    private Handler mHandler = new Handler(Looper.myLooper());
+    private final Handler mHandler = new Handler(Looper.myLooper());
 
     public PrefsRepository(Context context) {
         this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);

@@ -15,14 +15,14 @@ import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_SUCCESS;
 public class PresenterImpl implements Presenter {
 
     @Inject
-    public PrefsRepository repository;
+    PrefsRepository repository;
     private MyView myView;
 
     public PresenterImpl() {
         MyApplication.getInstance().getMyAppComponent().inject(this);
     }
 
-    private Repository.OnLoadListener<String> loadListener = new PrefsRepository.OnLoadListener<String>() {
+    private final Repository.OnLoadListener<String> loadListener = new PrefsRepository.OnLoadListener<String>() {
         @Override
         public void onLoaded(String data) {
             myView.showSavedText(data);
@@ -35,7 +35,7 @@ public class PresenterImpl implements Presenter {
         }
     };
 
-    private Repository.OnSavedListener saveListener = new PrefsRepository.OnSavedListener() {
+    private final Repository.OnSavedListener saveListener = new PrefsRepository.OnSavedListener() {
         @Override
         public void onSaved() {
             myView.showToast(SAVE_SUCCESS);
@@ -46,7 +46,6 @@ public class PresenterImpl implements Presenter {
             myView.showToast(SAVE_ERROR);
         }
     };
-
 
     @Override
     public void saveText(String text) {

@@ -2,12 +2,17 @@ package com.task.vasskob.testdaggersharedpref.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.task.vasskob.testdaggersharedpref.MyApplication;
 import com.task.vasskob.testdaggersharedpref.R;
 import com.task.vasskob.testdaggersharedpref.presenter.PresenterImpl;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements MyView {
     @Bind(R.id.edit_text)
     EditText etTextToSave;
 
+    @Bind(R.id.pb_loading)
+    ProgressBar pbLoading;
+
+    @Inject
     PresenterImpl presenter;
 
     @Override
@@ -31,14 +40,14 @@ public class MainActivity extends AppCompatActivity implements MyView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-        presenter = new PresenterImpl();
+        MyApplication.getInstance().getMyAppComponent().inject(this);
         presenter.attachView(this);
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.btn_save)
     void onSaveClick() {
+        pbLoading.setVisibility(View.VISIBLE);
         String text = etTextToSave.getText().toString();
         presenter.saveText(text);
     }
@@ -46,10 +55,12 @@ public class MainActivity extends AppCompatActivity implements MyView {
     @SuppressWarnings("unused")
     @OnClick(R.id.btn_load)
     void onLoadClick() {
+        pbLoading.setVisibility(View.VISIBLE);
         presenter.loadText();
     }
 
     public void showToast(int key) {
+        pbLoading.setVisibility(View.GONE);
         String msg;
         switch (key) {
             case 0:
@@ -69,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements MyView {
         }
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     public void showSavedText(String title) {
