@@ -90,5 +90,6 @@ public class MainActivity extends AppCompatActivity implements MyView {
     protected void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+        MyApplication.getInstance().clearActivityComponent();
     }
 }

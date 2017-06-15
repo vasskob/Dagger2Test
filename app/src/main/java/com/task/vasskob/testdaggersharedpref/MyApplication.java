@@ -48,6 +48,10 @@ public class MyApplication extends Application {
         return activityComponent;
     }
 
+    public void clearActivityComponent() {
+        activityComponent = null;
+    }
+
     public PresenterComponent getPresenterComponent() {
         if (presenterComponent == null) {
             presenterComponent = getActivityComponent()
@@ -56,5 +60,9 @@ public class MyApplication extends Application {
                     .build();
         }
         return presenterComponent;
+    }
+
+    public void clearPresenterComponent() {
+        presenterComponent = null;
     }
 }
