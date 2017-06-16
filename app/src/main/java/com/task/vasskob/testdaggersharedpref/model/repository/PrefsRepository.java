@@ -1,27 +1,27 @@
 package com.task.vasskob.testdaggersharedpref.model.repository;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.os.Looper;
+
+import javax.inject.Inject;
 
 import static com.task.vasskob.testdaggersharedpref.Constants.DEFAULT_SAVED_TEXT;
 
 public class PrefsRepository implements Repository<String> {
 
-    private static final String PREFS_NAME = "prefs";
     private static final String KEY_SAVED_TEXT = "KEY_SAVED_TEXT";
     private static final long DELAY_MS = 1000;
 
-    private final SharedPreferences prefs;
+    @Inject
+    SharedPreferences prefs;
 
-    private final Handler mHandler = new Handler(Looper.myLooper());
+    private final Handler mHandler = new Handler();
 
-    public PrefsRepository(Context context) {
-        this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+    @Inject
+    PrefsRepository() {
     }
 
-      @Override
+    @Override
     public void add(String text, final OnSavedListener listener) {
         prefs
                 .edit()

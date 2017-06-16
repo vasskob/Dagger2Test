@@ -11,4 +11,5 @@ import dagger.Component;
 @Component(modules = {MyAppModule.class})
 public interface MyAppComponent {
     ActivityComponent.Builder activityComponentBuilder();
+    //  PrefsRepository getPrefsRepository();
 }

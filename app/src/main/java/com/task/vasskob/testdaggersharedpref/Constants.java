@@ -6,4 +6,7 @@ public class Constants {
     public static final int SAVE_ERROR = 2;
     public static final int SAVE_SUCCESS = 3;
     public static final String DEFAULT_SAVED_TEXT = "DEFAULT";
+    public static final String PREFS_NAME = "prefs";
+    public static final String ERROR = "error";
+
 }
