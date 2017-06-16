@@ -4,11 +4,6 @@ import com.task.vasskob.testdaggersharedpref.model.repository.PrefsRepository;
 import com.task.vasskob.testdaggersharedpref.model.repository.Repository;
 import com.task.vasskob.testdaggersharedpref.view.MyView;
 
-import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_ERROR;
-import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_SUCCESS;
-import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_ERROR;
-import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_SUCCESS;
-
 public class PresenterImpl implements Presenter {
 
     private PrefsRepository repository;
@@ -22,24 +17,24 @@ public class PresenterImpl implements Presenter {
         @Override
         public void onLoaded(String data) {
             myView.showSavedText(data);
-            myView.showToast(LOAD_SUCCESS);
+            myView.showLoadSuccessToast();
         }
 
         @Override
         public void onError(String error) {
-            myView.showToast(LOAD_ERROR);
+            myView.showLoadErrorToast();
         }
     };
 
     private final Repository.OnSavedListener saveListener = new PrefsRepository.OnSavedListener() {
         @Override
         public void onSaved() {
-            myView.showToast(SAVE_SUCCESS);
+            myView.showSaveSuccessToast();
         }
 
         @Override
         public void onError(String message) {
-            myView.showToast(SAVE_ERROR);
+            myView.showSaveErrorToast();
         }
     };
 

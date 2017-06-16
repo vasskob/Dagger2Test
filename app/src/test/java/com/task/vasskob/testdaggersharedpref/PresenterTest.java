@@ -13,10 +13,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static com.task.vasskob.testdaggersharedpref.Constants.ERROR;
-import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_ERROR;
-import static com.task.vasskob.testdaggersharedpref.Constants.LOAD_SUCCESS;
-import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_ERROR;
-import static com.task.vasskob.testdaggersharedpref.Constants.SAVE_SUCCESS;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -52,7 +48,7 @@ public class PresenterTest {
         verify(mockPrefsRepository).add(eq(TEST_STRING), mSavedListenerCaptor.capture());
         mSavedListenerCaptor.getValue().onSaved();
 
-        verify(mockView).showToast(SAVE_SUCCESS);
+        verify(mockView).showSaveSuccessToast();
     }
 
     @Test
@@ -62,7 +58,7 @@ public class PresenterTest {
         verify(mockPrefsRepository).add(eq(TEST_STRING), mSavedListenerCaptor.capture());
         mSavedListenerCaptor.getValue().onError(ERROR);
 
-        verify(mockView).showToast(SAVE_ERROR);
+        verify(mockView).showSaveErrorToast();
     }
 
     @Test
@@ -73,7 +69,7 @@ public class PresenterTest {
         mLoadListenerCaptor.getValue().onLoaded(TEST_STRING);
 
         verify(mockView).showSavedText(TEST_STRING);
-        verify(mockView).showToast(LOAD_SUCCESS);
+        verify(mockView).showLoadSuccessToast();
     }
 
     @Test
@@ -83,7 +79,7 @@ public class PresenterTest {
         verify(mockPrefsRepository).get(mLoadListenerCaptor.capture());
         mLoadListenerCaptor.getValue().onError(TEST_STRING);
 
-        verify(mockView).showToast(LOAD_ERROR);
+        verify(mockView).showLoadErrorToast();
     }
 
     @Test(expected = NullPointerException.class)

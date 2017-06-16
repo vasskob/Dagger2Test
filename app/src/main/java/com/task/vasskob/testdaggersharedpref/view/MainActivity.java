@@ -18,8 +18,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.task.vasskob.testdaggersharedpref.Constants.DEFAULT_SAVED_TEXT;
-
 public class MainActivity extends AppCompatActivity implements MyView {
 
     @Bind(R.id.tv_title)
@@ -33,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements MyView {
 
     @Inject
     PresenterImpl presenter;
+    private String toastMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,25 +58,32 @@ public class MainActivity extends AppCompatActivity implements MyView {
         presenter.loadText();
     }
 
-    public void showToast(int key) {
+    @Override
+    public void showLoadSuccessToast() {
+        toastMsg = getString(R.string.load_success);
+        showToast(toastMsg);
+    }
+
+    @Override
+    public void showLoadErrorToast() {
+        toastMsg = getString(R.string.load_error);
+        showToast(toastMsg);
+    }
+
+    @Override
+    public void showSaveSuccessToast() {
+        toastMsg = getString(R.string.save_success);
+        showToast(toastMsg);
+    }
+
+    @Override
+    public void showSaveErrorToast() {
+        toastMsg = getString(R.string.save_error);
+        showToast(toastMsg);
+    }
+
+    public void showToast(String msg) {
         pbLoading.setVisibility(View.GONE);
-        String msg;
-        switch (key) {
-            case 0:
-                msg = getString(R.string.load_error);
-                break;
-            case 1:
-                msg = getString(R.string.load_success);
-                break;
-            case 2:
-                msg = getString(R.string.save_error);
-                break;
-            case 3:
-                msg = getString(R.string.save_success);
-                break;
-            default:
-                msg = DEFAULT_SAVED_TEXT;
-        }
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
