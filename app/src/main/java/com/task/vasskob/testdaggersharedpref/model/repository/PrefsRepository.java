@@ -6,11 +6,11 @@ import android.os.Handler;
 import javax.inject.Inject;
 
 import static com.task.vasskob.testdaggersharedpref.Constants.DEFAULT_SAVED_TEXT;
+import static com.task.vasskob.testdaggersharedpref.Constants.DELAY_MS;
 
 public class PrefsRepository implements Repository<String> {
 
     private static final String KEY_SAVED_TEXT = "KEY_SAVED_TEXT";
-    private static final long DELAY_MS = 1000;
 
     @Inject
     SharedPreferences prefs;

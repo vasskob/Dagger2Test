@@ -2,7 +2,7 @@ package com.task.vasskob.testdaggersharedpref.presenter;
 
 import com.task.vasskob.testdaggersharedpref.view.MyView;
 
-interface Presenter {
+public interface Presenter {
     void attachView(MyView view);
     void detachView();
 
